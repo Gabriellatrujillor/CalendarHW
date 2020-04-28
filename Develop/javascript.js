@@ -4,7 +4,8 @@ var currDay = moment().format("dddd, MMMM Do YYYY h:mm HH");
 console.log(currDay);
 var currHour = parseInt(currDay.split(" ")[4].split(":")[0]);
 console.log("Current hour: " + currHour);
-var getList = localStorage.getItem("To-do-list")
+
+
    var timeArray = [
     9,
     10,
@@ -22,27 +23,46 @@ var getList = localStorage.getItem("To-do-list")
     22,
     23,
     24,
-  ];
-  var userArray = ["", "", "", "", "", "", "", "", "",];
-  //   Create elements on page
+  ];  
+  // ELEMENT FOR LOOP
   for (var i = 0; i < 9; i++) {
     var div1 = $("<div>");
     div1.attr("class", "input-group time-block");
+
     var div2 = $("<div>");
     div2.attr("class", "input-group-prepend hour");
+
     var span = $("<span>");
     span.attr("class", "input-group-text");
     span.attr("id", "time");
+
     var textArea = $("<textarea>");
+    if (timeArray[i] < currHour) {
+      // PAST TIME
+      textArea.attr("class", "form-control description past");
+      console.log(textArea.attr("class", "form-control description past"));
+    }
+    // PRESENT TIME
+    if (currHour == timeArray[i]) {
+      textArea.attr("class", "form-control description present");
+      console.log(textArea.attr("class", "form-control description present"));
+    }
+    // FUTURE TIME
+    if (timeArray[i] > currHour) {
+      textArea.attr("class", "form-control description future");
+      console.log(textArea.attr("class", "form-control description future"));
+    }
+    }
     textArea.attr("class", "form-control row description past");
     textArea.attr("aria-label", "With textarea");
-    textArea.attr("id", `${i}`);
+    textArea.attr("id", timeArray[i]);
+
     var div3 = $("<div>");
     div3.attr("class", "input-group-append").value;
+
     var btn = $("<button>");
     btn.attr("class", "btn btn-outline-secondary saveBtn");
     btn.attr("type", "button");
-    btn.attr("id", `${i}`);
     btn.text("Save");
     // Append divs:
     div2.append(span);
@@ -68,22 +88,22 @@ var getList = localStorage.getItem("To-do-list")
   $("#currentDay").append(displayDay);
 // *******THIS CODE IS WORKING, WILL DISPLAY TEXT AREA IN LOCALSTORAGE BUT NOT GOING THROUGH EACH BUTTON
 $("button").on("click", function () {
-    var info = $(this).parent("div").prev().val();
-    console.log(info);
-    localStorage.setItem("userArray", JSON.stringifY(userArray));
-  });
-// var futureTime = currHour +;
-// console.log(futureTime + "time");
-// **********
-  //   Time blocks change depending on current time - NOT WORKING
-  function futureBlockColor() {
-    var futureTime = currHour + 1 
-  //   var futureColor = $("textarea").css("background-color", "green")
-    console.log(futureTime + "time");
-    for (var i = futureTime; i > currHour;  ) {
-        var futureColor = $("textarea").css("background-color", "green")
-      textarea.classList.add(futureColor);
-      }
-  }
-  futureBlockColor();
+  var info = $(this).parent("div").prev().val();
+  console.log(info);
+  console.log($(this).parent("div").prev().attr("id"));
+  localStorage.setItem($(this).parent("div").prev().attr("id"), info);
+});
+
+$("#9").val(localStorage.getItem("9"));
+$("#10").val(localStorage.getItem("10"));
+$("#11").val(localStorage.getItem("11"));
+$("#12").val(localStorage.getItem("12"));
+$("#13").val(localStorage.getItem("13"));
+$("#14").val(localStorage.getItem("14"));
+$("#15").val(localStorage.getItem("15"));
+$("#16").val(localStorage.getItem("16"));
+$("#17").val(localStorage.getItem("17"));
+console.log(timeArray[i] - currHour);
+
+
 
